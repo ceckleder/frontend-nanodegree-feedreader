@@ -91,8 +91,9 @@ $(function() {
             loadFeed(0, done); //load first defined feed (app.js)
          });
 
-        it('Single .entry exists in .feed container', function() {
+        it('Single .entry exists in .feed container', function(done) {
             expect($('.feed .entry').length).toBeGreaterThan(0);
+            done();
         });
     });
 
