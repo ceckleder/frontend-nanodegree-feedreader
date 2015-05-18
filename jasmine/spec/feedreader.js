@@ -89,12 +89,10 @@ $(function() {
      */
        beforeEach(function(done){
             loadFeed(0, done); //load first defined feed (app.js)
-            done();
          });
 
         it('Single .entry exists in .feed container', function(done) {
             expect($('.feed .entry').length).toBeGreaterThan(0);
-            done();
         });
     });
 
@@ -105,23 +103,17 @@ $(function() {
      * by the loadFeed function that the content actually changes.
      */
         var oldFeeds;
-        beforeEach(function(done){
-            loadFeed(0, done); //load first defined feed (app.js)
-            done();
-            oldFeeds = $('.feed').html();
-        });
+        it('content should change when feed 1 is loaded after feed 0', function(done){
+            loadFeed(0, callBack); //load first defined feed (app.js)
 
-        it('content should change when feed 1 is loaded', function(done) {
-            loadFeed(1, done);
-            expect($('.feed').html()).not.toBe(oldFeeds);
-        });
-        it('content should change when feed 2 is loaded', function(done) {
-            loadFeed(2, done);
-            expect($('.feed').html()).not.toBe(oldFeeds);
-        });
-        it('content should change when feed 3 is loaded', function(done) {
-            loadFeed(3, done);
-            expect($('.feed').html()).not.toBe(oldFeeds);
+            function callBack() {
+                oldFeeds = $('.feed').html();
+                loadFeed(1, secondCallBack);
+            }
+            function secondCallBack() {
+                expect($('.feed').html()).not.toBe(oldFeeds);
+                done();
+            }
         });
     });
 }());
